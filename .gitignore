@@ -1,0 +1,28 @@
+# Archivos de Python & Django
+*.pyc
+*~
+__pycache__
+*.log
+
+#Entorno
+.env
+
+
+# Virtual Env
+vgmx_env/
+
+
+# Node modules
+node_modules/
+
+
+# Database 
+db.sqlite3
+
+
+# Otros
+.DS_Store
+.vscode
+.idea
+entrypoint.sh
+migrations/
