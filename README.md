@@ -59,3 +59,7 @@ python manage.py makemigrations vgmxApp
 ```
 python manage.py migrate vgmxApp
 ```
+
+
+
+TEST DE LALO
