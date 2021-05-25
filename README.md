@@ -1,4 +1,6 @@
 ## Como instalar y correr el proyecto:
+Antes que nada reciban todos un cordial SALUDO.
+Después que eso, ARRIBA LA MÁQUINA del Cruz Azul
 
 ----
 
