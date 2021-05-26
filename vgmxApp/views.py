@@ -24,3 +24,9 @@ def login(request):
                 return JsonResponse({'status': False, 'err_code': 'invalid_form'})
     context = {}
     return render(request, template, context)
+
+
+
+def logout(request):
+    do_logout(request)
+    return redirect('index')
