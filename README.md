@@ -1,4 +1,6 @@
 ## Como instalar y correr el proyecto:
+Antes que nada reciban todos un cordial SALUDO.
+Después que eso, ARRIBA LA MÁQUINA del Cruz Azul
 
 ----
 
@@ -59,3 +61,7 @@ python manage.py makemigrations vgmxApp
 ```
 python manage.py migrate vgmxApp
 ```
+
+
+
+TEST DE LALO DESDE LA NUEVA BRANCH
