@@ -11,5 +11,6 @@ urlpatterns = [
  
     path('usuario/login', views.login, name='login'),
     path('usuario/logout', views.logout, name='logout'),
+    path('usuario/dashboard', views.dashboard, name='dashboard'),
     # path('usuario/categoria/nueva', views.new_category, name='new_category'),
 ]
