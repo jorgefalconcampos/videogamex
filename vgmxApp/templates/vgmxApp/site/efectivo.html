@@ -5,182 +5,117 @@
 
 
 <body>
-    <!--barra de navegacion-->
-    <div class="container-fluid">
-        <div class="row">
-            <header class="col-md-12 mt-0">
-
-                <!--barra de navegacion-->
-                <div class="container-fluid">
-                    <div class="row">
-                        <header class="col-md-12 mt-0">
-
-                            <!--nav bar-->
-                            <!-- Navigation-->
-                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                                <div class="container px-4 px-lg-5">
-                                    <img src="img/gamex2.jpeg" width="150px" height="100px" alt="">
-                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                    &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-
-                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation"><span
-                                            class="navbar-toggler-icon"></span></button>
-                                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                                            &nbsp; &nbsp;
-                                            <li class="nav-item"><a class="nav-link" href="#!">Inicio</a></li>
-                                            &nbsp; &nbsp;
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-                                                    role="button" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">Tienda</a>
-                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    <li><a class="dropdown-item" href="productos.html">productos</a>
-                                                    </li>
-                                                    <li>
-                                                        <hr class="dropdown-divider" />
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="#!">servicios</a></li>
-                                                    <li><a class="dropdown-item" href="#!">Contacto</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <form class="d-flex">
-                                            <button class="btn btn-outline-dark" type="submit">
-                                                <i class="bi-cart-fill me-1"></i>
-                                                Carrito
-                                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </nav>
-                        </header>
-                    </div>
-                </div>
-
-                <!--cuerpo-->
-                <!-- Header-->
-                <header class="bg-dark py-1">
-                    <div class="container px-4 px-lg-5 my-5">
-                        <div class="text-center text-white">
-                            <h1 class="display-4 fw-bolder">VIDEOGAMEX</h1>
-                            <p class="lead fw-normal text-white-50 mb-0">VIDEOGAMEX Hara tu día brillar</p>
+    
+    
+    <div class=" py-3">
+        <div class="container px-2 px-lg-5 my-5">
+            <div class="text-center text-dark">
+                <h1 class="display-6 ">Elija algún medio de pago</h1>
+            </div>
+        </div>
+    </div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{% static 'img/oxxo.png' %}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">OXXO</h5>
+                            </div>
                         </div>
-                    </div>
-                </header>
-
-                <div class=" py-3">
-                    <div class="container px-2 px-lg-5 my-5">
-                        <div class="text-center text-dark">
-                            <h1 class="display-6 ">Elija algún medio de pago</h1>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
+                            </a></div>
                         </div>
                     </div>
                 </div>
-                <section class="py-5">
-                    <div class="container px-4 px-lg-5 mt-5">
-                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="img/oxxo.png" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">OXXO</h5>
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
-                                            </a></div>
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+                        <div class="badge bg-dark text-white position-absolute"
+                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{% static 'img/b1.png' %}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">Banamex</h5>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
+                            </a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Sale badge-->
+                        <div class="badge bg-dark text-white position-absolute"
+                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{% static 'img/b2.jpg' %}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">Bancomer
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
+                                </a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{% static 'img/b3.png' %}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">VISA MASTERCARD</h5>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Sale badge-->
-                                    <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="img/b1.png" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">Banamex</h5>
-                                            <!-- Product reviews-->
-                                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
-                                                </a></div>
-                                    </div>
-                                </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
+                                </a></div>
                             </div>
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Sale badge-->
-                                    <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="img/b2.jpg" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">Bancomer
-                                        </div>
-                                    </div>
-                                    <!-- Product actions-->
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
-                                                </a></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-5">
-                                <div class="card h-100">
-                                    <!-- Product image-->
-                                    <img class="card-img-top" src="img/b3.png" alt="..." />
-                                    <!-- Product details-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <!-- Product name-->
-                                            <h5 class="fw-bolder">VISA MASTERCARD</h5>
-                                            <!-- Product reviews-->
-                                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                                <div class="bi-star-fill"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Pagar
-                                                </a></div>
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
                 </section>
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="metodosP.html">
-                cancelar</a>
-             </div>
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="metodosP.html">
+                    cancelar</a>
+                </div>
                 <script type="text/javascript" src="jquery/jquery-3.6/jquery-3.6.js"></script>
                 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-</body>
-
+            </body>
+            
 {% endblock %}

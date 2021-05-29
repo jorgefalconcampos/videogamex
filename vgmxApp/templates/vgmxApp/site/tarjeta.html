@@ -7,107 +7,37 @@
 
 <body>
     <!--barra de navegacion-->
-    <div class="container-fluid">
-        <div class="row">
-            <header class="col-md-12 mt-0">
-
-                <!--barra de navegacion-->
-                <div class="container-fluid">
-                    <div class="row">
-                        <header class="col-md-12 mt-0">
-
-                            <!--nav bar-->
-                            <!-- Navigation-->
-                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                                <div class="container px-4 px-lg-5">
-                                    <img src="img/gamex2.jpeg" width="150px" height="100px" alt="">
-                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                    &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-
-                                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation"><span
-                                            class="navbar-toggler-icon"></span></button>
-                                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                                            &nbsp; &nbsp;
-                                            <li class="nav-item"><a class="nav-link" href="#!">Inicio</a></li>
-                                            &nbsp; &nbsp;
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-                                                    role="button" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">Tienda</a>
-                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    <li><a class="dropdown-item" href="productos.html">Productos</a></li>
-                                                    <li>
-                                                        <hr class="dropdown-divider" />
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="#!">Servicios</a></li>
-                                                    <li><a class="dropdown-item" href="#!">Contacto</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <form class="d-flex">
-                                            <button class="btn btn-outline-dark" type="submit">
-                                                <i class="bi-cart-fill me-1"></i>
-                                                Carrito
-                                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </nav>
-                        </header>
-                    </div>
-                </div>
-
-                <!--cuerpo-->
-                <!-- Header-->
-                <header class="bg-dark py-1">
-                    <div class="container px-4 px-lg-5 my-5">
-                        <div class="text-center text-white">
-                            <h1 class="display-4 fw-bolder">VIDEOGAMEX</h1>
-                            <p class="lead fw-normal text-white-50 mb-0">VIDEOGAMEX Hara tu día brillar</p>
-                        </div>
-                    </div>
-                </header>
-
-                <div class=" py-3">
-                    <div class="container px-2 px-lg-5 my-5">
-                        <div class="text-center text-dark">
-                            <h1 class="display-6 ">Métodos de Pago</h1>
-                            <p class="lead fw-normal text-white-50 mb-0">VIDEOGAMEX Hara tu día brillar</p>
-                        </div>
-                    </div>
-                </div>
+    <div class="container py-3">
+       
+           
+               
                 <!--Formulario-->
          <section id="content" class="row">
-            <aside class="col">
-                <img src="img/tarjeta.png" width="450px" height="450px" alt="">
-            </aside>
-            <section  id="formu" class="col border">
+            <div class="col-lg-6">
+                <img src="{% static 'img/tarjeta.png' %}" width="450px" height="450px" alt="">
+            </div>
+            <div  id="formu" class="col-lg-6">
                 <form>
-                    <div class="form-row">
-                        <div class="col-md-4 mb-3">
-                            <label for="validationDefault01">Nombre de la tarjeta</label>
-                            <input type="text" class="form-control" id="validationDefault01" placeholder="nombre de la tarjeta" required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label for="validationDefault02">Número de tarjeta</label>
-                            <input type="text" class="form-control" id="validationDefault02" placeholder="No. tarjeta" required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label for="validationDefault02">Fecha</label>
-                            <input type="text" class="form-control" id="validationDefault02" placeholder="MM-AAAA" required>
-                        </div>
-
-                        <div class="col-md-4 mb-3">
-                            <label for="validationDefault02">Códogo de seguridad</label>
-                            <input type="text" class="form-control" id="validationDefault02" placeholder="000000" required>
-                        </div>
-                        
+                    <div class="row-md-4 mb-3">
+                        <label for="validationDefault01">Nombre de la tarjeta</label>
+                        <input type="text" class="form-control" id="validationDefault01" placeholder="nombre de la tarjeta" required>
+                    </div>
+                    
+                    <div class="row-md-4 mb-3">
+                        <label for="validationDefault02">Número de tarjeta</label>
+                        <input type="text" class="form-control" id="validationDefault02" placeholder="No. tarjeta" required>
+                    </div>
+                    
+                    <div class="row-md-4 mb-3">
+                        <label for="validationDefault02">Fecha</label>
+                        <input type="text" class="form-control" id="validationDefault02" placeholder="MM-AAAA" required>
+                    </div>
+                    
+                    <div class="row-md-4 mb-3">
+                        <label for="validationDefault02">Código de seguridad</label>
+                        <input type="text" class="form-control" id="validationDefault02" placeholder="000000" required>
+                    </div>
+                    
                     <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
@@ -117,24 +47,15 @@
                         </div>
                     </div>
                     <button class="btn btn-primary" type="submit">enviar</button>
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="metodosP.html">
-                        cancelar</a>
-                     </div>
+                    <button class="btn btn-outline-dark mt-auto" href="metodosP.html">cancelar</a></button>
                 </form>
-            </section>
+            </div>
          </section>
 
-                <div class="col-12">
-                    <div class="bg-dark py-2">
-                        <!-- Footer-->
-                        <footer class="py-none bg-dark">
-                            <div class="container px-4 px-lg-5">
-                                <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
+       
+    </div>
 
+           
 </body>
 
 
