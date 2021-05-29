@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -5,20 +6,26 @@ from django.contrib.auth import authenticate, login as do_login, logout as do_lo
 from django.contrib.auth.decorators import login_required
 
 
+VGMX_APP_FOLDER_NAME = 'vgmxApp'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# TPS stands for: templates folder path
+TFP_SITE =  os.path.join(BASE_DIR, VGMX_APP_FOLDER_NAME, "templates", VGMX_APP_FOLDER_NAME, "site")
+TFP_STAFF =  os.path.join(BASE_DIR, VGMX_APP_FOLDER_NAME, "templates", VGMX_APP_FOLDER_NAME, "staff")
+
+
 def base(request):
-    template = 'vgmxApp/site/base.html'
     if request.method == 'GET':
         return redirect('index')
-    return render(request, template)
+    return render(request)
 
 
 def index(request):
-    template = 'vgmxApp/site/index.html'
+    template = os.path.join(TFP_SITE, 'index.html')
     return render(request, template)
 
 
 def login(request):
-    template = 'vgmxApp/staff/login.html'
+    template = os.path.join(TFP_STAFF, 'login.html')
     if request.user.is_authenticated:
         # print("The user is authenticated")
         return redirect('dashboard')
@@ -41,10 +48,34 @@ def login(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    template = 'vgmxApp/staff/dashboard.html'
+    template = os.path.join(TFP_STAFF, 'dashboard.html')    
     return render (request, template)
 
 
 def logout(request):
     do_logout(request)
     return redirect('index')
+
+
+def efectivo(request):
+    template = os.path.join(TFP_SITE, 'efectivo.html')
+    return render (request, template)
+
+
+def metodos_de_pago(request):
+    template = os.path.join(TFP_SITE, 'metodos_pago.html')
+    return render (request, template)
+
+
+def productos(request):
+    template = os.path.join(TFP_SITE, 'productos.html')
+    return render (request, template)
+
+def tarjeta(request):
+    template = os.path.join(TFP_SITE, 'tarjeta.html')
+    return render (request, template)
+
+
+
+
+
