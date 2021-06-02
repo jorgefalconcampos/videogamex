@@ -66,3 +66,4 @@ python manage.py migrate vgmxApp
 
 TEST DE LALO DESDE LA NUEVA BRANCH
 TEST ASUS
+Test Git Credential
