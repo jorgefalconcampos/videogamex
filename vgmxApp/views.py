@@ -97,8 +97,8 @@ def categorias(request):
 def categorias_detalle(request, slug):
     template = os.path.join(TFP_SITE, 'categorias_detalle.html')
     categoria = get_object_or_404(Category, slug=slug)
-    juegos = Game.objects.filter(category=categoria, status=1).order_by('-published_date')
-    paginacion = Paginator(juegos, 6)
+    juegos_en_categoria = Game.objects.filter(category=categoria, status=1).order_by('-published_date')
+    paginacion = Paginator(juegos_en_categoria, 6)
     pagina = request.GET.get('page')
     try:
         games_list = paginacion.page(pagina)
@@ -106,7 +106,7 @@ def categorias_detalle(request, slug):
         games_list = paginacion.page(1)
     except EmptyPage:
         games_list = paginacion.page(paginacion.num_pages)
-    context = {'category': categoria, 'games_list': juegos}
+    context = {'category': categoria, 'games_list': games_list}
 
     return render (request, template, context)
 
