@@ -4,6 +4,11 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonRespons
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import authenticate, login as do_login, logout as do_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test # upt is to restrict to super user only
+from django.utils.text import slugify
+from . forms import NewCategory
+from . models import Category
+
 
 
 VGMX_APP_FOLDER_NAME = 'vgmxApp'
@@ -86,11 +91,29 @@ def tarjeta(request):
     template = os.path.join(TFP_SITE, 'tarjeta.html')
     return render (request, template)
 
+@login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser)
 def categoria_nueva(request):
     template = os.path.join(TFP_STAFF, 'category_new.html')
-    return render (request, template)
-
-
-
-
+    response_data = {'success': False}
+    if request.method == 'POST':
+        form = NewCategory(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            if not Category.objects.filter(slug=slugify(name)).exists():
+                newCateg = form.save(commit=False)
+                newCateg.save()
+                form.save_m2m()
+                response_data['success'] = True
+                return JsonResponse(response_data)
+            else:
+                response_data['err_code'] = 'already_exists'
+                return JsonResponse(response_data)
+        else:
+            response_data['err_code'] = form.errors
+            return JsonResponse(response_data)
+    else:
+        form = NewCategory()
+    context = {'newCategoryForm':form}
+    return render(request, template, context)
 

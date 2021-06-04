@@ -8,7 +8,6 @@ urlpatterns = [
     path('', views.base, name='base'),
     path('inicio', views.index, name='index'),
     # path('buscar', views.search, name='search'),
-
     path('efectivo', views.efectivo, name='efectivo'),
     path('metodosPago', views.metodos_de_pago, name='metodos_pago'),
     path('productos', views.productos, name='productos'),
@@ -19,5 +18,4 @@ urlpatterns = [
     path('usuario/categoria/nueva', views.categoria_nueva, name='categoria_nueva'),
     path('usuario/logout', views.logout, name='logout'),
     path('usuario/dashboard', views.dashboard, name='dashboard'),
-    # path('usuario/categoria/nueva', views.new_category, name='new_category'),
 ]

@@ -26,10 +26,8 @@
         <div class="col-lg-xs-12 col-lg-sm-12 col-lg-md-8 col-lg-5 col-lg-xl-6">
             <div class="card">
                 <div class="card-body mt-1">
-
                     <p id="newCatego_form_success" style="display:none" class="py-2 small h6 font-weight-bold text-success text-center"> <i class="fas fa-check mr-1"></i>Categoría agregada</p>
                     <p id="newCatego_form_error" style="display:none" class="py-2 small h6 font-weight-bold text-danger text-center"> <i class="fas fa-exclamation-circle mr-1"></i>Ocurrió un error al agregar la categoría</p>
-
                     <form id="newCatego_frm" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}  
                         <div class="form-group py-1">
@@ -48,7 +46,6 @@
                                 {{ newCategoryForm.image }}  
                             </div>
                         </div>
-                        
                         <div class="form-group"> <button type="submit" class="btn btn-primary btn-block">Agregar categoría</button> </div>
                     </form>
 
