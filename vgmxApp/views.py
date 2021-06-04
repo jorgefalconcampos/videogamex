@@ -106,31 +106,13 @@ def categorias_detalle(request, slug):
         games_list = paginacion.page(1)
     except EmptyPage:
         games_list = paginacion.page(paginacion.num_pages)
-
     context = {'category': categoria, 'games_list': juegos}
 
-    return render (request, template)
+    return render (request, template, context)
 
 
 
 
-
-# A particular category page
-def categories_detail(request, slug):
-    template = 'ecad_app/categories_detail.html'
-    category = get_object_or_404(Category, slug=slug)
-    posts = Post.objects.filter(category=category, status=1).order_by('-published_date')
-    paginator = Paginator(posts, 6)
-    page = request.GET.get('page')
-    try:
-        post_list = paginator.page(page)
-    except PageNotAnInteger:
-        post_list = paginator.page(1)
-    except EmptyPage:
-        post_list = paginator.page(paginator.num_pages)
-
-    context = { 'category': category, 'post_list': post_list}
-    return render(request, template, context)
 
 
 
