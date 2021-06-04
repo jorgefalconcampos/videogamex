@@ -1,0 +1,70 @@
+{% extends 'vgmxApp/site/base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+
+{% block title %} {{category}} | videogamex{% endblock %}
+
+
+
+{% block categorias_detalle %}
+
+<div class="container mt-5 py-3">
+    <h1 class="text-center text-lg-left font-weight-bold ml-0 ml-lg-2"><i class="material-icons align-center">category</i> <span class="badge badge-secondary">{{ category }}</span></h1>
+    <hr class="my-3 py-2">
+    
+    <div class="row my-3">
+
+        {% for juego in games_list %}
+        <div class="col-md-4 my-4">
+            <div class="card h-100 detail">
+                <div class="img-post img-zoom">    
+                </div>
+                
+                <div class="card-body">
+                    <h6 class="mt-3 mb-3"> {{ juego.subtitle }} </h6>
+                    <hr>
+                    <div style="max-height: 200px;"> <p class="card-text">{{ juego.post_body|safe|truncatewords:20 }}</p> </div> 
+                </div>
+                
+                <div class="card-footer">
+                    <p class="mt-1 mb-1 card-subtitle text-muted "> Fecha de publicación : {{ juego.published_date }} </p>
+                    <hr>
+                    <div>
+                    </div>
+                </div>
+            </div> 
+        </div>  
+        {% endfor %}
+
+        {% if not games_list %}
+        <div class="col-12">
+            <h3 class="text-center text-lg-left py-5">No hay juegos para mostrar...</h3>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+{% if games_list %}
+<div class="col d-flex justify-content-center">
+    <div class="p-2 pb-5 mb-5">
+        {% if games_list.has_other_pages %}
+        <ul class="pagination pagination-lg justify-content-center">
+            {% if games_list.has_previous %}
+            <li><a href="?page={{ games_list.previous_page_number }}" class="page-link">&laquo; ANTERIOR</a></li>
+            {% endif %}
+            {% if games_list.has_next %}
+            <li><a href="?page={{ games_list.next_page_number }}" class="page-link">SIGUIENTE &raquo;</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        <span class="row d-flex- justify-content-center lead text-muted"> Página {{ games_list.number }} de {{ games_list.paginator.num_pages }}</span>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+

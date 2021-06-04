@@ -10,6 +10,9 @@ urlpatterns = [
     # path('buscar', views.search, name='search'),
     path('efectivo', views.efectivo, name='efectivo'),
     path('metodosPago', views.metodos_de_pago, name='metodos_pago'),
+    path('categorias', views.categorias, name='categorias'),
+    path('categorias/<slug:slug>', views.categorias_detalle, name='categorias_detalle'),
+
     path('productos', views.productos, name='productos'),
     path('tarjeta', views.tarjeta, name='tarjeta'),
     path('usuario/login', views.login, name='login'),

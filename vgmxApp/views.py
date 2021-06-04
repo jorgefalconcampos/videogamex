@@ -1,4 +1,6 @@
 import os
+from typing import ContextManager
+from django.core import paginator
 from django.shortcuts import render
 from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -7,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import login_required, user_passes_test # upt is to restrict to super user only
 from django.utils.text import slugify
 from . forms import NewCategory
-from . models import Category
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from . models import Game, Category
 
 
 
@@ -70,6 +73,76 @@ def efectivo(request):
 def metodos_de_pago(request):
     template = os.path.join(TFP_SITE, 'metodos_pago.html')
     return render (request, template)
+
+
+
+
+
+
+
+
+def categorias(request):
+    template = os.path.join(TFP_SITE, 'categorias.html')
+    todas_las_categorias = Category.objects.all()
+    diccionario = {}
+    for categoria in todas_las_categorias:
+        cuantas = Game.objects.filter(category=categoria, status=1).count()
+        diccionario[categoria] = cuantas
+    context = { 'categories': diccionario }
+    return render (request, template, context)
+
+
+
+
+def categorias_detalle(request, slug):
+    template = os.path.join(TFP_SITE, 'categorias_detalle.html')
+    categoria = get_object_or_404(Category, slug=slug)
+    juegos = Game.objects.filter(category=categoria, status=1).order_by('-published_date')
+    paginacion = Paginator(juegos, 6)
+    pagina = request.GET.get('page')
+    try:
+        games_list = paginacion.page(pagina)
+    except PageNotAnInteger:
+        games_list = paginacion.page(1)
+    except EmptyPage:
+        games_list = paginacion.page(paginacion.num_pages)
+
+    context = {'category': categoria, 'games_list': juegos}
+
+    return render (request, template)
+
+
+
+
+
+# A particular category page
+def categories_detail(request, slug):
+    template = 'ecad_app/categories_detail.html'
+    category = get_object_or_404(Category, slug=slug)
+    posts = Post.objects.filter(category=category, status=1).order_by('-published_date')
+    paginator = Paginator(posts, 6)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+
+    context = { 'category': category, 'post_list': post_list}
+    return render(request, template, context)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def perfil(request):
