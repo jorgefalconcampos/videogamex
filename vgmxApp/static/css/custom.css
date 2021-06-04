@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700,800,900&display=swap");
+body {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: whitesmoke; }
+
+.topbar {
+  width: 100%;
+  background-color: gray;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.11em;
+  font-weight: 500; }
+
+.top-navigation-bar {
+  width: 100%;
+  background-color: #F1C000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.11em;
+  font-weight: 500; }
+
+h1, h2, h3, h4 {
+  font-weight: 500; }
+
+.date {
+  margin: 0em 0em 0em 0em;
+  font-size: 0.75em;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  background-color: whitesmoke; }
+
+.bottom {
+  width: 100%;
+  align-items: center;
+  text-align: center; }
+
+.main-bg-header {
+  border-radius: 5px;
+  background-color: #E1E2E0;
+  margin: 5px 15px 5px 15px; }
+
+.subtitle {
+  font-weight: 500;
+  font-size: 25px;
+  padding-top: 10px; }
+
+.comment {
+  border-radius: 10px;
+  border: 2px solid #d4d4d4; }
+  .comment p {
+    padding: 10px 0 0 10px;
+    font-weight: 600;
+    font-size: 14px; }
+    .comment p span {
+      color: #a3a3a3;
+      font-size: 13px; }
+  .comment .comment-body {
+    border-bottom-left-radius: 8px 8px;
+    border-bottom-right-radius: 8px 8px;
+    margin-top: -5px;
+    padding: 5px 10px 1px 10px;
+    background-color: #f3f3f3; }
+    .comment .comment-body p {
+      padding: 7px 0 0 0;
+      font-size: 15px;
+      font-weight: 500; }
+
+.img-zoom {
+  overflow: hidden; }
+  .img-zoom img {
+    transition: transform .35s, filter 0.5s ease-in-out;
+    filter: grayscale(45%); }
+  .img-zoom img:hover {
+    filter: grayscale(0);
+    transform: scale(1.25); }
+
+.img-upload {
+  border: solid 1px #D6D6D6;
+  border-radius: 5px;
+  padding: 5px 0px 5px 10px; }
+  .img-upload * {
+    margin: 10px 0px 10px 0px; }
+
+.title-header {
+  font-weight: 700;
+  max-width: 800px;
+  overflow: hidden;
+  text-overflow: clip; }
+
+.subtitle-header {
+  font-weight: 600; }
+
+.okpunietas {
+  background-color: #333; }
+
+.img-header {
+  border-radius: 2px;
+  width: 100%;
+  max-height: 300px;
+  -webkit-box-shadow: 3px 3px 13px -3px rgba(166, 166, 166, 0.78);
+  -moz-box-shadow: 3px 3px 13px -3px rgba(166, 166, 166, 0.78);
+  box-shadow: 3px 3px 13px -3px rgba(166, 166, 166, 0.78); }
+
+.grad-6 {
+  background: #F2994A;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #F2C94C, #F2994A);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-gradient(linear, left top, right top, from(#F2C94C), to(#F2994A));
+  background: -webkit-linear-gradient(left, #F2C94C, #F2994A);
+  background: -o-linear-gradient(left, #F2C94C, #F2994A);
+  background: linear-gradient(to right, #F2C94C, #F2994A);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-box-shadow: 0 0 20px lightyellow;
+  box-shadow: 0 0 20px lightyellow; }
+
+.author-d-profile {
+  border-radius: 5px;
+  background-color: rgba(75, 73, 73, 0.089); }
+
+.author-d-name {
+  font-weight: 650; }
+
+.img-post {
+  max-height: 175px; }
+
+.img-post-small {
+  max-height: 75px; }
+
+.img-related {
+  max-height: 75px; }
+
+.post-title {
+  font-weight: 650; }
+  .post-title *a {
+    color: black; }
+
+.post-subtitle {
+  font-weight: 510;
+  color: red; }
+
+.post-preview {
+  font-size: 13px; }
+
+.post-author {
+  font-size: 14px; }
+
+.post-body {
+  padding: 20px 0px 20px 0px;
+  font-size: 18px;
+  font-weight: 500; }
+
+.author img {
+  -webkit-transition: box-shadow 0.1 ease;
+  -moz-transition: box-shadow 0.1s ease;
+  transition: box-shadow 0.1s ease;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 50%;
+  z-index: 999;
+  padding: 5px 5px 5px 5px; }
+  .author img:hover {
+    box-shadow: 0 0 0 3px gray; }
+
+.detailsAuthor {
+  margin: 0px 0px 0px 20px; }
+
+.img-detail {
+  height: 300px;
+  width: 900px;
+  object-fit: cover; }
+
+.post-category {
+  position: absolute;
+  top: 1em;
+  background: #e74c3c;
+  padding: 10px 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  max-width: 230px;
+  word-wrap: break-word; }

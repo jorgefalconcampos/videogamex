@@ -67,12 +67,27 @@ def metodos_de_pago(request):
     return render (request, template)
 
 
+def perfil(request):
+    template = os.path.join(TFP_STAFF, 'profile.html')
+    context = {}
+    return render (request, template, context)
+
+
+def ajustes(request):
+    template = os.path.join(TFP_STAFF, 'settings.html')
+    context = {}
+    return render (request, template, context)
+
 def productos(request):
     template = os.path.join(TFP_SITE, 'productos.html')
     return render (request, template)
 
 def tarjeta(request):
     template = os.path.join(TFP_SITE, 'tarjeta.html')
+    return render (request, template)
+
+def categoria_nueva(request):
+    template = os.path.join(TFP_STAFF, 'category_new.html')
     return render (request, template)
 
 

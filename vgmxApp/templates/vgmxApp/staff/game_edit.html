@@ -1,0 +1,252 @@
+{% extends 'ecad_app/user/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %} 
+
+{% block post_edit %}
+
+
+{% if nocat %}
+<div class="modal hide" id="noCategoModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header px-lg-4">
+                <h5 class="modal-title"> <i class="fas fa-code mx-1"></i> Sin categorías</h5>
+            </div>
+            <div class="modal-body px-lg-4">
+              <div class="row my-3">
+                <div class="col-lg-7 text-center">
+                    <div class="alert alert-info">
+                      <h4 class="font-weight-bold">Aún no hay categorías</h4> 
+                    </div>
+                    <div class="py-2">
+                        <div class="row">
+                            <div class="col">
+                                <div class="center py-3 h6"> 
+                                  {% trans 'str_Hello' %} {{ request.user.first_name|default:request.user }}!
+                                  {% trans 'str_noCategosExplanaition_1' %} <b>ECAD</b> {% trans 'str_noCategosExplanaition_2' %}
+                                </div>
+                                <div class="center py-2 h6">{% trans 'str_noCategosExplanaition_3' %}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                <div class="col-lg-5 text-center">                
+                    <img class="" src="{% static 'img/clip-under-const.png' %}" alt="" width="200px">
+                </div>
+            </div>
+              <div class="modal-footer justify-content-end px-sm-0 px-md-0 px-lg-0">
+                <a href="{% url 'dashboard' %}" class="btn btn-primary">{% trans 'str_goBack2Dashboard' %}</a>
+
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="my-3 my-5 pt-4">
+
+    <div class="card">
+        
+        {% if not request.user.is_superuser %}
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-left my-4">
+                        <h3 class="section-heading font-weight-bold text-uppercase">{% trans 'str_postEdit_title' %} :)</h3>
+                        <h4 class="section-subheading text-muted">{% trans 'str_postEdit_subtitle' %}</h4>
+                    </div>
+                </div>
+                
+                <div class="row py-5">
+                    <div class="col-lg-12">
+
+                        <form id="PostForm"  method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}       
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group py-1">
+                                        <label class="ml-1" for="post_author">{% trans 'str_author' %}</label>
+                                        <input id="post_author" name="author" class="form-control form-control-lg" type="text" readonly disabled placeholder="{{ request.user.get_full_name}}">
+                                    </div>
+
+                                    <div class="form-group py-1">
+                                        <label class="ml-1" for="post_title">{{postForm.title.label}}</label>
+                                        {{postForm.title}}
+                                    </div>
+
+                                    <div class="form-group py-1">
+                                        <label class="ml-1" for="post_subtitle">{{postForm.subtitle.label}}</label>
+                                        {{postForm.subtitle}}
+                                    </div>
+
+                                    <div class="form-group py-1">
+                                        <div class="d-flex d-inline justify-content-between">
+                                            <label class="ml-1" for="post_image">{{postForm.image.label}}</label>
+                                            <div class="d-flex d-inline mt-1"> 
+                                                <div class="">
+                                                    <div data-toggle="tooltip" data-html="true" data-placement='bottom' title="https://unsplash.com">
+                                                        <a href="https://unsplash.com" target="_blank"><i class="fab fa-unsplash fa-lg"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-3 mr-2">
+                                                    <div data-toggle="tooltip" data-html="true" data-placement='bottom' title="https://www.fileconverto.com/image-compressor">
+                                                        <a href="https://www.fileconverto.com/image-compressor" target="_blank"><i class="fas fa-compress-arrows-alt fa-lg"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="img-upload"> 
+                                            <div class="pt-1" data-toggle="tooltip" data-html="true" data-placement='right' title="{% for e in postForm.image.errors %} {% if postForm.image.errors|length == 1 %} <span> {{ e }} </span> {% else %} <li class='ml-1'>  {{ e }} </li> {% endif %} {% endfor %}">
+                                                {{ postForm.image }}  
+
+                                                <!-- {{postForm.image.label}} -->
+
+                                                <!-- {{ postForm.unsplash_URL.label }} -->
+                                                {{ postForm.unsplash_URL }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group py-1">
+                                        <label class="ml-1" for="post_category">{{postForm.category.label}}</label>
+                                        {{postForm.category}}
+                                    </div>
+
+                                    <div class="form-group py-1">
+                                        <label class="ml-1" for="post_tags">{{postForm.tags.label}}</label>
+                                        {{postForm.tags}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6"> 
+                                    <div class="form-group py-1" > 
+                                        <label class="ml-2" for="post_title">{{postForm.post_body.label}}</label>
+                                        <div class="float-right mr-4">
+                                            {% if post.status == 1 %}
+                                            <a href="{% url 'post_detail' post.category.slug post.slug %}" target="_blank">{% trans 'str_preview' %}</a>
+                                            {% else %}
+                                            <a href="" onclick='document.forms["PostForm"].submit(); return false;'>{% trans 'str_preview' %}</a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="" data-toggle="tooltip" data-html="true" data-placement='right' title="{% for e in form.post_body.errors %} {% if form.subtitle.errors|length == 1 %} <span> {{ e }} </span> {% else %} <li class='ml-1'>  {{ e }} </li> {% endif %} {% endfor %}">
+                                            <div>{{ postForm.post_body|safe }}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-12 text-right">
+                                        <a href="javascript:history.go(-1)" class="btn btn-outline-secondary btn-xl text-uppercase my-3 mx-2"> <i class="material-icons align-top mr-1">cancel</i>{% trans 'str_cancel' %}</a>
+                                        {% if nocategs %}
+                                        <button type="button" class="btn btn-primary btn-xl disabled text-uppercase my-3" > <i class="material-icons align-top mr-1">save</i>{% trans 'str_save' %}</button> 
+                                        {% else %}
+                                            {% if is_edit and post.status == 1 %}
+                                                <div class="float-right" data-toggle="tooltip" data-html="true" data-placement='bottom' title="Este post ya está aprobado, si lo guardas tendrás que esperar a que se apruebe nuevamente.">
+                                                    <button type="submit" class="btn btn-primary btn-xl text-uppercase my-3"> <i class="material-icons align-top mr-1">save</i>{% trans 'str_save' %}</button> 
+                                                </div>
+                                            {% else %}
+                                            <button type="submit" class="btn btn-primary btn-xl text-uppercase my-3"> <i class="material-icons align-top mr-1">save</i>{% trans 'str_save' %}</button> 
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                           
+                            
+                            {% for message in messages %}
+                            <div id="toastMessage" class="toast mr-2 mb-2 show shadow" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" data-delay="7000" style="position: fixed; bottom: 0; right:0;  z-index:1111;">
+                                <div class="toast-header bg-danger text-white">
+                                    <i clas="fa-exclamation-circle mr-1"></i>
+                                    <b class="mr-auto">Ocurrió un error</b>
+                                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                                </div>
+                                <div class="toast-body"> {{ message }}
+                                </div>
+                            </div>
+                            {% endfor %}                            
+                        </form>
+
+                    </div>
+                </div>            
+            </div>
+
+            {% if is_edit %}
+            <div class="container d-flex inline mt-5">
+                <h6 class="ml-2 font-weight-bold"> {% trans 'str_postStatus' %}: </h6>
+
+                {% if post.status == 0 %}
+                <div class="d-flex d-inline" data-toggle="tooltip" data-html="true" data-placement='top' title="{% trans 'str_status_draft_desc' %}">
+                    <i class="ml-1 px-0 material-icons align-top md-inactive">access_time</i>  
+                    <h6 > {% trans 'str_status_draft' %} </h6>
+                </div>
+                {% endif %}
+
+                {% if post.status == 1 %}
+                <div class="d-flex d-inline" data-toggle="tooltip" data-html="true" data-placement='top' title="{% trans 'str_status_approved_desc' %}">
+                    <i class="ml-1 px-0 material-icons align-top md-inactive">done</i>  
+                    <h6> {% trans 'str_status_approved' %} </h6>
+                </div>
+                {% endif %}
+
+                {% if post.status == 2 %}
+                <div class="d-flex d-inline" data-toggle="tooltip" data-html="true" data-placement='top' title="{% trans 'str_status_rejected_desc' %}">
+                    <i class="ml-1 px-0 material-icons align-top md-inactive">clear</i>  
+                    <h6> {% trans 'str_status_rejected' %} </h6>
+                </div>
+                {% endif %}
+
+                {% if post.status == 3 %}
+                <div class="d-flex d-inline" data-toggle="tooltip" data-html="true" data-placement='top' title="{% trans 'str_status_archived_desc' %}">
+                    <i class="ml-1 px-0 material-icons align-top md-inactive">archive</i>  
+                    <h6> {% trans 'str_status_archived' %} </h6>
+                </div>    
+                <a id="unarchiveBtn_in_post_edit" class="h6 ml-3 border bg-warning-light px-2" style="cursor: pointer;" data-postid="{{post.pk}}" data-posttitle="{{post.title}}" data-toggle="modal" data-target="#postActionsModal">{% trans 'str_unarchive' %}</a>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <div class="container py-3">
+                <div class="card border-danger rounded">
+                    <div class="card-header p-0">
+                        <div class="container py-2">
+                            <h5 class="text-danger"> <i class="material-icons align-middle">warning</i> {% trans 'str_post_DangerZone' %} </h3>
+                        </div>
+                    </div>
+                    <div class="card-body my-auto">
+                        <a id="deleteBtn_in_post_edit" type="button" class="btn btn-danger mr-2 my-1 text-white" data-postid="{{post.pk}}" data-posttitle="{{post.title}}" data-toggle="modal" data-target="#postActionsModal"> 
+                           {% trans 'str_deletePost' %}
+                        </a>
+
+                        {% if not post.status == 3 %}
+                        <a id="archiveBtn_in_post_edit" type="button" class="btn btn-warning-light my-1 text-dark" data-postid="{{post.pk}}" data-posttitle="{{post.title}}" data-toggle="modal" data-target="#postActionsModal"> 
+                            {% trans 'str_archivePost' %}
+                         </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-left my-4">
+                        <h3 class="section-heading font-weight-bold text-uppercase">No es posible escribir un post</h3>
+                        <h4 class="section-subheading text-muted">El rol de superusuario está destinado a moderación. Si desea crear una nueva publicación, cree un nuevo usuario con sus datos reales.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+{% endblock %}
