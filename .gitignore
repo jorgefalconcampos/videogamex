@@ -15,7 +15,7 @@ vgmx_env/
 # Node modules
 node_modules/
 
-# Database
+# Database updated
 db.sqlite3
 
 # Otros
