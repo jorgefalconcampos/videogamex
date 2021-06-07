@@ -15,7 +15,8 @@ vgmx_env/
 # Node modules
 node_modules/
 
-
+# Database
+db.sqlite3
 
 # Otros
 .DS_Store
