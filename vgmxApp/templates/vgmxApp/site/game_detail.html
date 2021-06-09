@@ -1,0 +1,433 @@
+{% extends 'ecad_app/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load url_builder_openGraph %}
+{% load crispy_forms_tags %} 
+
+
+
+
+{% block og_type %}article{% endblock %}
+{% block og_url %}{{request.build_absolute_uri}}{% endblock %}
+{% block og_title %}{{post.title}}{% endblock %}
+{% block og_desc %}{{post.subtitle}}{% endblock %}
+{% block og_image %}{{request.scheme}}://{{request.get_host}}/media/{{post.image}}{% endblock %}
+{% block og_image_alt %}{{post.title}}{% endblock %}
+{% block title %}{{post.title}} | ECAD{% endblock %}
+
+
+
+
+
+
+{% block post_content %}
+
+
+<div class="container-fluid px-lg-5 pb-5">
+    <div class="px-lg-5">
+        <div itemscope itemtype="https://schema.org/BlogPosting">
+            <div class="row my-3 py-0 py-sm-5 py-md-5 py-lg-5 px-0 px-sm-0">
+                <div class="col-lg-8 ">
+                    <div class="card shadow">
+                        <div class="mx-2 mx-md-3 mx-lg-3">
+                            <div class="card-body">
+                                <div class="post-header mt-3">
+                                    {% if request.user == post.author.name %}
+                                    <div class="alert {% if post.status == 0 %}alert-warning{% endif %}{% if post.status == 1 %}alert-success{% endif %}{% if post.status == 2 %}alert-danger{% endif %}{% if post.status == 3 %}alert-dark{% endif %}">                                    
+                                        <div class="row d-flex justify-content-center justify-content-lg-between align-items-center">
+                                            <div class="col-12 col-lg-8 pr-0">
+                                                <div class="text-center text-lg-left py-2" style="font-size: 14px;">
+                                                    <b>
+                                                        {% if post.status == 0 %}{% trans 'post_draftStatus' %}{% endif %}
+                                                        {% if post.status == 1 %}{% trans 'post_approvedStatus' %} 🎉{% endif %}
+                                                        {% if post.status == 2 %}{% trans 'post_rejectedStatus' %}{% endif %}
+                                                        {% if post.status == 3 %}{% trans 'post_draftStatus' %}{% endif %}
+                                                        {% if post.status == 4 %}{% trans 'post_archivedStatus' %}{% endif %}
+                                                    </b>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-lg-4 pl-0 d-flex justify-content-center  justify-content-lg-end">
+                                                <div class="col-fluid text-center">
+                                                    {% if post.status == 1 %}
+                                                    <div data-toggle="tooltip" data-html="true" data-placement='top' title="{% trans 'post_alreadyApprovedMsg' %}">
+                                                        <a class="btn btn-dark" href="{% url 'post_edit' post.slug %}"><i class="material-icons align-top">edit</i> Editar post </a>
+                                                    </div>
+                                                    {% else %}
+                                                    <a class="btn btn-dark" href="{% url 'post_edit' post.slug %}"><i class="material-icons align-top">edit</i> Editar post</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %} 
+    
+    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- <div class="bg-info py-3"><h5>{% fullstatic post.image.url %}</h5></div> -->
+                                            <div itemprop="headline"> <h2 class="text-center text-lg-left font-weight-bold"> {{ post.title }} </h2> </div> 
+                                        </div>
+                                        <div class="col-12">
+                                            <div itemprop="alternativeHeadline"> <p class="text-center text-lg-left py-3 h4"> {{ post.subtitle }} </p> </div>
+                                        </div>                                  
+                                    </div>
+                                        
+                                </div>
+    
+                                <hr>
+                                <img itemprop="image" class="img-detail img-fluid rounded" src="{{ post.image.url }}" alt="{{post.title}}"> 
+                                {% if post.unsplash_URL %}
+                                <p class="small text-right text-capitalize m-0 mt-1 mr-2">{% trans 'str_photo' %}: <a class="font-weight-bold" href="{{ post.unsplash_URL }}" target="_blank">UNSPLASH</a> </p>                                
+                                {% else %} 
+                                <p class="small text-right text-capitalize m-0 mt-1 mr-2">{% trans 'str_photo' %}: <b>UNSPLASH</b> </p>
+                                {% endif %}
+                                <hr class="mt-1">
+    
+                                <div itemprop="text-left"> <p class="mt-0 py-1"> {{ post.post_body|safe}} </p> </div>
+                                <hr>
+                                {% if post.status == 1 %}
+                                <div id="reactions_holder" class="row d-flex d-inline py-3 mb-1 justify-content-center hide">     
+                                    <div class="col">
+                                        <div id="new_reaction_success" style="display:none; font-size: 14px;" class="alert alert-success text-center mx-3" role="alert"> <i class="material-icons align-bottom md-18 mr-1" id="new_reaction_success_icon"></i> {% trans 'post_reaction_added' %} </div>    
+                                        <form id="addReaction" method="POST">
+                                            {% csrf_token %}
+                                            <ul id="reactions" class="list-inline mb-0 text-center">
+                                                <li class="list-inline-item py-1"> <button id="vote_fav" name="fav" type="submit" class="btn  btn-outline-secondary px-3"> <i class="material-icons align-bottom md-20 mr-1 text-shadow">grade</i> {% trans 'str_favReaction' %} <span class="ml-1 badge badge-light border"> {{post.vote_fav}} </span> </button> </li>
+                                                <li class="list-inline-item py-1"> <button id="vote_util" name="util" type="submit" class="btn btn-outline-info px-3 mx-1"> <i class="material-icons align-bottom md-20 mr-1">done</i> {% trans 'str_utilReaction' %} <span class="ml-1 badge badge-light border"> {{post.vote_util}} </span> </button> </li>
+                                                <li class="list-inline-item py-1"> <button id="vote_tmbup" name="up" type="submit" class="btn btn-outline-success px-3 mx-1"> <i class="material-icons align-bottom md-20 mr-1 text-shadow">thumb_up</i> {% trans 'str_goodReaction' %} <span class="ml-1 badge badge-light border"> {{post.vote_tmbup}} </span> </button> </li>
+                                                <li class="list-inline-item py-1"> <button id="vote_tmbdn" name="down" type="submit" class="btn btn-outline-danger px-3"> <i class="material-icons align-bottom md-20 mr-1 text-shadow">thumb_down</i> {% trans 'str_badReaction' %} <span class="ml-1 badge badge-light border"> {{post.vote_tmbdn}} </span> </button> </li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% endif %}
+    
+                                <div class="row align-middle text-center">
+                                    <div class="col-12">
+                                        <div itemprop="keywords"> 
+                                            <p class="h5 mx-2 d-inline-block align-middle">{% trans 'str_topics' %}:</p>
+                                            {% if post.category %}
+                                            <a class="h6 badge badge-pill bg-steel text-white reset-anchor-inherit px-2" href="{% url 'categories_detail' post.category.slug %}"> 
+                                                {{ post.category }}
+                                            </a>
+                                            {% else %}
+                                            <p class="h6 lead mx-2 d-inline-block align-middle"> Al parecer este post no pertenece a ninguna categoría. </p>
+                                            {% endif %}
+                                            
+                                            
+                                            {% if post.tags.all %}
+                                            {% for tag in post.tags.all %}
+                                            <a class=" h6 badge badge-pill badge-dark text-white reset-anchor-inherit px-2 my-2 mx-1" href="{% url 'tags_detail' tag.slug %}"> 
+                                                <i class="fas fa-tag fa-sm mx-1"></i>{{ tag }}
+                                            </a>
+                                            {% endfor %}
+                                            {% else %}
+                                            <p class="lead mx-2 d-inline-block align-middle"> No hay tags relacionados con este post. </p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div> 
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="card mt-4 mt-lg-0 mt-xl-0 text-center text-lg-left">
+                        <div class="card-body pb-1 pb-lg-3">
+                            <p class="h6" itemprop="dateCreated"> <small> {% trans 'str_publishedDate' %}: {% if post.published_date %} {{ post.published_date }} {% endif %} </small> </p>
+                            <div itemprop="creator">
+                                <div class="row mt-3 pt-1 mb-1">
+                                    <div class="col-12 col-lg-4">
+                                        <div class="author mr-3" style="padding-left: 1px;">
+                                            <a href="{% url 'author_detail' post.author.slug %}">
+                                                <img class="circle-rounded" src="{{ post.author.image.url }}" alt="{{post.author.name.get_full_name}}" width="100" height="100">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-lg-8">
+                                        <div class="row justify-content-center justify-content-lg-start">
+                                            <div class="pl-0 pl-lg-3">
+                                                <h6 class="mt-3"> {% trans 'str_postBy' %}:  
+                                                    <a href="{% url 'author_detail' post.author.slug %}" itemscope itemtype="http://schema.org/Person"> {{ post.author.name.get_full_name }} </a>  
+                                                </h6>
+                                                <div itemprop="jobTitle"> <p> {{ post.author.title }} </p> </div>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="card border-0 mt-3 shadow-sm mb-4 mb-lg-5 p-2 p-lg-0">
+                        <div class="card-body p-lg-4 text-center text-lg-left">
+                            <h4 class="h4 mb-4">{% trans 'str_saveOrshare' %}</h4>
+    
+                             <!-- AddToAny BEGIN -->
+                            <ul class="list-inline mb-0 a2a_kit a2a_kit_size_32 a2a_default_style">
+                                <li class="list-inline-item"><a class="a2a_button_facebook"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_facebook_messenger"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_twitter"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_email"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_whatsapp"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_telegram"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_pinterest"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_evernote"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_pocket"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_reddit"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_tumblr"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_print"></a></li>
+                                <li class="list-inline-item"><a class="a2a_button_copy_link"></a></li>
+                                <li class="list-inline-item"><a class="a2a_dd" href="https://www.addtoany.com/share"></a></li>
+                            </ul>
+                            <script> var a2a_config = a2a_config || {}; a2a_config.onclick = 1; a2a_config.num_services = 10; </script>
+                            <script async src="https://static.addtoany.com/menu/page.js"></script>
+                            <!-- AddToAny END -->
+    
+    
+                             
+    
+    
+                            <!-- <ul class="list-inline mb-0">
+                                <li class="list-inline-item"><a class="social-link facebook" href="#"><i class="fab fa-facebook-f fa-lg"></i></a></li>
+                                <li class="list-inline-item"><a class="social-link twitter" href="#"><i class="fab fa-twitter fa-lg"></i></a></li>
+                                <li class="list-inline-item"><a class="social-link vimeo" href="#"><i class="fab fa-vimeo"></i></a></li>
+                                <li class="list-inline-item"><a class="social-link instagram" href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li class="list-inline-item"><a class="social-link youtube" href="#"><i class="fab fa-youtube"></i></a></li>
+                            </ul> -->
+    
+    
+                           
+    
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-3 mb-5 d-none d-sm-block ">
+                        <div class="card-body bg-platinum">
+                            <h4 class="h4 mb-2 text-center text-lg-left">{% trans 'str_search' %}</h4>
+                            <hr class="mt-1 mb-3">
+                            <div class="row">
+                                <div class="col-lg-12 mx-0">
+                                    <!-- En detalle post -->
+                                    <form method="GET" action="{% url 'search' %}" name="" class="mx-0 mb-2 rounded">
+                                        <label class="col bg-platinum p-0 pt-1 text-left ml-1 par" for="{{searchForm.q.id_for_label}}">{{searchForm.q.label}}</label>
+                                        <div class="bg-white p-2 rounded">
+                                            <div class="input-group">
+                                                {{searchForm.q}}
+                                                <div class="input-group-append rounded">
+                                                    <button class="btn btn-primary rounded" type="submit"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                    </form>                         
+                                </div>
+                            </div>
+                        </div>
+                    </div>                 
+                    
+                    {% if post.status == 1 and more_from_author%}
+                    <div class="mt-3 mt-lg-5">
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="more_from">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_mf" aria-expanded="true" aria-controls="collapseTwo">
+                                            <i class="material-icons align-top">keyboard_arrow_down</i> {% trans 'str_post_detail_moreFrom' %} {{ post.author.name.get_full_name }}
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapse_mf" class="collapse" aria-labelledby="more_from" data-parent="#accordion">
+                                    <div class="card-body">
+                                        {% for rpost in more_from_author %} <!-- Getting the latest 3 blogs from author, rpost means related post -->  
+                                        <div class="py-2 mx-1">
+                                            <div class="card">
+                                                <div class="img-post-small img-zoom">    
+                                                    <a href="{% url 'post_detail' rpost.category.slug rpost.slug %}"> <img class="card-img-top" src="{{ rpost.image.url }}" alt="{{ rpost.title }}"> </a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h6 class="post-subtitle"><a href=" {% url 'post_detail' rpost.category.slug rpost.slug %} "> {{ rpost.title }} </a></h6>         
+                                                    <p class="mt-2 card-subtitle text-muted ">{% trans 'str_publishedDate' %}: {{ rpost.published_date }} </p>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        {% endfor %}    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                </div>
+                
+            </div>
+        </div>
+
+
+        {% if related_posts %}
+        <section class="mb-0 mb-sm-5 mb-md-5 mb-lg-5 mb-xl-5">
+            <div class="pb-3">
+                <header class="text-center mb-5">
+
+                    {% if post.status != 1 %}
+                    <div data-toggle="tooltip" data-html="true" data-placement='top' title="Los posts relacionados se mostrarán cuando tu post sea aprobado. Los posts relacionados pueden cambiar dependiendo diversos factores.">
+                        <h1 class="mt-2 py-2 font-weight-bold"> {% trans 'str_mayInterested' %} </h1>                        
+                    </div>
+                    {% else %}
+                    <h1 class="mt-2 py-2 font-weight-bold"> {% trans 'str_mayInterested' %} </h1> 
+                    {% endif %}
+                </header>
+                <div class="row justify-content-center">
+                    {% for post in related_posts%}
+                    <div class="col-lg-4 align-self-center">
+                        <div class="py-2 mx-1">
+                            <div class="card">
+                                <div class="img-post-small-related img-zoom">
+                                    <a href="{% url 'post_detail' post.category.slug post.slug %}">
+                                        <img itemprop="image" class="card-img-top" src="{{ post.image.url }}" alt="{{ post.title }}">
+                                    </a>
+                                </div>
+            
+                                <div class="card-body pb-1 position-relative">
+                                    <h5 class="post-title"><a href=" {% url 'post_detail' post.category.slug post.slug %}" class="stretched-link"> {{ post.title }} </a> </h5>
+                                    <h6 class="post-subtitle"> {{ post.subtitle }} </h6>
+                                </div>
+            
+                                <div class="card-footer py-2">
+                                    <p class="mt-1 card-subtitle text-muted ">{% trans 'str_publishedDate' %}: {{ post.published_date }} </p>
+                                    <h6 class="mt-1 post-author"> {% trans 'str_postBy' %}:  <a href="{% url 'author_detail' post.author.slug %}"> {{ post.author.name.get_full_name }} </a> </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+        
+        
+        {% if post.status == 1 %}
+        <div class="pb-5">
+            <div class="card shadow-sm p-2 p-lg-0">
+                <div class="container card-body">
+            
+                    <h3 class="py-1 my-3"> <b> {{ comments.count }} </b> {% trans 'str_post_detail_CountingComments' %} </h3>
+                    <a id="new_cmt_btn" class="my-2 mb-4 btn btn-secondary" href="#newCmt" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="newCmt">{% trans 'str_write_a_comment' %}</a>
+                    <div id="new_cmt_success" style="display:none;" class="alert alert-success" role="alert"> {% trans 'post_detail_AwaitingModeration' %} </div>
+                    <div class="collapse" id="newCmt">
+                        <div class="py-3">
+                            <form id="new_comment" method="POST">
+                                {% csrf_token %}
+            
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="ml-1" for="comment_fullName">{{commntForm.author.label}}</label>
+                                        {{commntForm.author}}
+                                    </div>
+                
+                                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label class="ml-1" for="comment_email">{{commntForm.author_email.label}}</label>
+                                        {{commntForm.author_email}}
+                                    </div>
+                
+                                    <div class="form-group col-12">
+                                        <label class="ml-1" for="comment_body">{{commntForm.comment_body.label}}</label>
+                                        <small class="float-left float-sm-right float-md-right float-lg-right mx-2"> (Asegúrate que tu comentario siga las <a href="" target="_blank">{% trans 'str_comment_terms' %}</a>).</small>
+                                        {{commntForm.comment_body}}
+                                    </div>
+            
+                                    <div class="form-group col-12 m-0">
+                                        <div id="recaptcha_cmnt" class="g-recaptcha"></div>
+                                        <p id="new_cmt_errorCaptcha" style="display: none;" class="ml-1 mt-2 small h6 font-weight-bold text-danger"> <i class="fas fa-exclamation-circle"></i> Captcha incorrecto, intenta de nuevo</p>
+                                        <button class="mt-3 btn btn-primary" type="submit">{% trans 'str_comment_CTA' %}</button>
+                                    </div>
+                                    
+            
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+            
+                    <hr class="mt-1 mb-4">
+            
+                    {% for comment in comments %}
+                    <div class="cmt mt-3 mb-3" itemscope itemtype="https://schema.org/Comment"> 
+                        <div class="row mx-3 d-flex justify-content-left justify-content-lg-between" >
+                            <div class="col-10">
+                                <div class="row d-flex justify-content-start">
+                                    
+                                    <div class="media align-items-center">
+                                        <img class="rounded-circle" src="{% static 'img/default-user.png' %}" alt="{{comment.author}}" width="75" height="75">
+                                        <div class="media-body ml-3">
+                                            <h5 class="mb-0 font-weight-bold">{{comment.author}}</h5>
+                                            <p class="small text-muted mb-0 font-weight-bold">{{comment.created_date}}</p>
+                                            <!-- <ul class="list-inline mb-0 small ">
+                                                <li class="list-inline-item m-0"><i class="fas fa-star text-primary"></i></li>
+                                                <li class="list-inline-item m-0"><i class="fas fa-star text-primary"></i></li>
+                                                <li class="list-inline-item m-0"><i class="fas fa-star text-primary"></i></li>
+                                                <li class="list-inline-item m-0"><i class="fas fa-star text-primary"></i></li>
+                                                <li class="list-inline-item m-0"><i class="fas fa-star-half-alt text-primary"></i></li>
+                                            </ul> -->
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="col-2">                            
+                                <div class="row d-flex justify-content-end">
+                                    {% if not comment.has_report %}
+                                    <div class="" data-toggle="tooltip" data-html="true" data-placement='right' title="{% trans 'str_reportComment' %}">
+                                        <p class=""> <a href="#"> <i class="material-icons align-top md-22">report_problem</i></a> </p>
+                                    </div>
+                                    {% else %}
+                                    <div class="" data-toggle="tooltip" data-html="true" data-placement='right' title="{% trans 'str_reportedComment' %}">
+                                        <p> <a href="#" class="text-danger"> <i class="material-icons align-top">info</i></a> </p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cmt-body" itemprop="comment"> 
+                            {% if not comment.has_report %}
+                            {{ comment.comment_body | linebreaks }} 
+                            {% else %}                          
+                            <div>
+                                <h3 class="mb-1">
+                                    <button class="btn btn-link btn-sm" data-toggle="collapse" data-target="#collapse_reportedComment" aria-expanded="true" >
+                                        <i class="material-icons align-top md-22 text-danger">keyboard_arrow_down</i> {% trans 'str_show' %} 
+                                    </button>
+                                </h3>
+                                
+                                <div id="collapse_reportedComment" class="collapse" aria-labelledby="reportedComment" >
+                                    <div class="py-2 px-2">
+                                        <div class="text-danger" style="text-decoration: line-through;">                                
+                                            {{ comment.comment_body | linebreaks }} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}                        
+                        </div> 
+                    </div>
+                    {% endfor %}      
+            
+                   
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}
