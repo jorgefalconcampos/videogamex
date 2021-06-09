@@ -11,6 +11,7 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.contrib import messages
 from django import forms
+from django.db.models import Count, Q, F
 from . forms import GameForm, NewCategory
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from . models import Game, Category, StaffPerson
@@ -118,6 +119,34 @@ def categorias_detalle(request, slug):
 
 def detalle_juego(request, slug):
     template = os.path.join(TFP_SITE, 'game_detail.html')
+    post = get_object_or_404(Game, slug=slug)
+
+    if request.POST.get('action') == 'reaction_Form':
+        try:
+            if request.POST.get('reaction') == 'fav':
+                post.vote_fav = F('vote_fav')+1
+            elif request.POST.get('reaction') == 'util':
+                post.vote_util = F('vote_util')+1
+            elif request.POST.get('reaction') == 'util':
+                post.vote_tmbup = F('vote_tmbup')+1
+            elif request.POST.get('reaction') == 'util':
+                post.vote_tmbdn = F('vote_tmbdn')+1
+        except:
+            response_data_r['success'] = False
+        finally:
+            post.save()
+            return JsonResponse(response_data_r)
+    
+    context = {
+        'post': post,
+    }
+
+    return render(request, template, context)
+
+            
+            
+
+
 
 
     return render (request, template) 
