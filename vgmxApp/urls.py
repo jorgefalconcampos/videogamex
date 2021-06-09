@@ -19,6 +19,7 @@ urlpatterns = [
     path('usuario/perfil', views.perfil, name='perfil'),
     path('usuario/ajustes', views.ajustes, name='ajustes'),
     path('usuario/categoria/nueva', views.categoria_nueva, name='categoria_nueva'),
+    path('usuario/juego/nuevo', views.nuevo_juego, name='juego_nuevo'),
     path('usuario/logout', views.logout, name='logout'),
     path('usuario/dashboard', views.dashboard, name='dashboard'),
 ]

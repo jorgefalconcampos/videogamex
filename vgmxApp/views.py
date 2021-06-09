@@ -8,9 +8,12 @@ from django.contrib.auth import authenticate, login as do_login, logout as do_lo
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import login_required, user_passes_test # upt is to restrict to super user only
 from django.utils.text import slugify
-from . forms import NewCategory
+from django.utils import timezone
+from django.contrib import messages
+from django import forms
+from . forms import GameForm, NewCategory
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from . models import Game, Category
+from . models import Game, Category, StaffPerson
 
 
 
@@ -86,8 +89,8 @@ def categorias(request):
     todas_las_categorias = Category.objects.all()
     diccionario = {}
     for categoria in todas_las_categorias:
-        cuantas = Game.objects.filter(category=categoria, status=1).count()
-        diccionario[categoria] = cuantas
+        games_number = Game.objects.filter(category=categoria, status=0).count()
+        diccionario[categoria] = games_number
     context = { 'categories': diccionario }
     return render (request, template, context)
 
@@ -97,7 +100,7 @@ def categorias(request):
 def categorias_detalle(request, slug):
     template = os.path.join(TFP_SITE, 'categorias_detalle.html')
     categoria = get_object_or_404(Category, slug=slug)
-    juegos_en_categoria = Game.objects.filter(category=categoria, status=1).order_by('-published_date')
+    juegos_en_categoria = Game.objects.filter(category=categoria, status=0).order_by('-published_date')
     paginacion = Paginator(juegos_en_categoria, 6)
     pagina = request.GET.get('page')
     try:
@@ -129,13 +132,40 @@ def categorias_detalle(request, slug):
 
 def perfil(request):
     template = os.path.join(TFP_STAFF, 'profile.html')
-    context = {}
+    profile = StaffPerson.objects.filter(name=request.user).first()
+    context = {'author': profile}
     return render (request, template, context)
+
+
+
+
+@login_required(login_url='login')
+def nuevo_juego(request):
+    template = os.path.join(TFP_STAFF, 'game_edit.html')
+    if request.method == "POST":
+        form = GameForm(request.POST, request.FILES)
+        if form.is_valid():
+            newgame = form.save(commit=False)
+            get_author = StaffPerson.objects.get(name=request.user)
+            newgame.author = get_author
+            newgame.published_date = timezone.now()
+            newgame.save()
+            form.save_m2m()
+            return redirect('index')
+        else:
+            messages.error(request, "Campos vacios")
+    else:
+        form = GameForm()
+    context = {'postForm': form}
+    if not Category.objects.count():
+        context['nocategs'] = True
+    return render(request, template, context)
 
 
 def ajustes(request):
     template = os.path.join(TFP_STAFF, 'settings.html')
-    context = {}
+    profile = StaffPerson.objects.filter(name=request.user).first()
+    context = {'author': profile}
     return render (request, template, context)
 
 def productos(request):

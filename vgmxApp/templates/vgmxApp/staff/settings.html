@@ -1,244 +1,240 @@
-{% extends 'vgmxApp/staff/base.html' %}
-{% load static %}
+{% extends 'vgmxApp/staff/base.html' %} {% load static %} {% block settings %}
 
+<div class="my-5">
+    <div class="row my-3">
+        <div class="col-md-5 col-xl-4">
 
-{% block settings %}
+            <div class="card">
+                <div class="card-header">
 
-    <div class="my-5">
-        <div class="row my-3">
-            <div class="col-md-5 col-xl-4">
-    
-                <div class="card">
-                    <div class="card-header"> 
-                           
-                        <div class="row my-1 text-center text-lg-left">               
-                            <div class="col-lg-3" >
-                                
-                                <div class="row text-center">
-                                    <div class="col">                            
-                                        <img class="mt-1 rounded-circle" src="{{ author.image.url }}" width="70" height="70">
-                                    </div>   
-                                </div>  
-                            </div>
-                        
-                            <div class="col-lg-9 mt-xs-1 mt-sm-3 mt-md-2 mt-lg-1">
-                                <div class="ml-0 ml-lg-0">
-                                    <h4 class="font-weight-bold mt-1 mb-0"> AJASLS </h4>
-                                    <h5> <small> {{ request.user}} </small> </h5>
+                    <div class="row my-1 text-center text-lg-left">
+                        <div class="col-lg-3">
+
+                            <div class="row text-center">
+                                <div class="col">
+                                    <img class="mt-1 rounded-circle" src="{{ author.image.url }}" width="70" height="70">
                                 </div>
                             </div>
-            
+                        </div>
+
+                        <div class="col-lg-9 mt-xs-1 mt-sm-3 mt-md-2 mt-lg-1">
+                            <div class="ml-0 ml-lg-0">
+                                <h4 class="font-weight-bold mt-1 mb-0">Perfil de Staff</h4>
+                                <h5> <small> {{ request.user}} </small> </h5>
+                            </div>
                         </div>
 
                     </div>
-    
-                    <div class="list-group list-group-flush" role="tablist">
-
-                        {% if not request.user.is_superuser %}
-                        <a id="settings_profile" class="list-group-item list-group-item-action" data-toggle="list" href="#profile" role="tab">
-                          <div class="h6"> Perfil  </div>
-                        </a>
-                        {% endif %}
-
-                        <a id="settings_account" class="list-group-item list-group-item-action {% if request.user.is_superuser %}active{% endif %}" data-toggle="list" href="#account" role="tab">
-                            <div class="h6"> Ajustes de la cuenta </div>
-                        </a>
-
-                        <a id="settings_password" class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
-                            <div class="h6"> Contraseña </div>
-                        </a>
-                                                
-                    </div>
-
-
-
 
                 </div>
-            </div>
-    
-            <div class="col-md-7 col-xl-8">
-                <div class="tab-content mt-3 mt-lg-0">
-                    <!-- Profile -->
+
+                <div class="list-group list-group-flush" role="tablist">
+
                     {% if not request.user.is_superuser %}
-                    <div class="tab-pane fade" id="profile" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between">    
-                                <h5 class="card-title my-auto">DSSDDS</h5> 
-                                <a href="{% url 'author_detail' author.slug %}" target="_blank" class="btn bnt-sm btn-primary"> 
-                                    Ver perfil
-                                </a> 
-                            </div>
-                            <div class="card-body">
-                                <form id="profile_frm" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label class="ml-1" for="profile_firstName">{{ProfileUserForm.first_name.label}}</label>
-                                                    {{ProfileUserForm.first_name}}
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label class="ml-1" for="profile_lastName">{{ProfileUserForm.last_name.label}}</label>
-                                                    {{ProfileUserForm.last_name}}
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="ml-1" for="profile_title">{{ProfileAuthorUserForm.title.label}}</label>
-                                                {{ProfileAuthorUserForm.title}}
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="ml-1" for="profile_bio">{{ProfileAuthorUserForm.bio.label}}</label>
-                                                {{ProfileAuthorUserForm.bio}}
-                                            </div>
-
-
-                                            <div data-toggle="tooltip" data-html="true" data-placement='right' title="nok">                                        
-                                                <div class="bd-callout bd-callout-secondary">
-                                                    <div class="form-group pt-1">
-                                                        <label class="ml-1" for="profile_mail"> {{ProfileAuthorUserForm.email.label}} <a href="#" type="button" data-toggle="modal" data-target="#generalModal" style="color:#5A5A5A"> <i id="showEpublic" class="fas fa-info-circle fa-lg mr-1"> </i> </a>  </label>                                                        
-                                                        <!-- if author.email == request.user.email -->
-                                                        <div class="input-group">
-                                                            {{ProfileAuthorUserForm.email}}
-                                                        </div>
-
-                                                                             
-                                                    </div>
-                                                
-                                                    <div class="form-group pt-2">    
-                                                        <label class="ml-1">Redes sociales</label>
-                                                        <div class="input-group">                          
-                                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-facebook-square fa-lg"></i></span></div>
-                                                            {{ProfileAuthorUserForm.facebook_URL}}
-                                                        </div>            
-
-                                                        <div class="input-group py-2">
-                                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-twitter-square fa-lg"></i></span></div>
-                                                            {{ProfileAuthorUserForm.twitter_URL}}
-                                                        </div>
-
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-linkedin fa-lg"></i></span></div>
-                                                            {{ProfileAuthorUserForm.linkedin_URL}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="text-center">
-                                                <div class="author-d-profile">
-                                                    <img src="{{author.image.url}}" class="rounded-circle img-responsive my-3" width="128" height="128">
-                                                    <p>Foto actual:<br><b id="profile_author_img">{{author.image_filename}}</b></p>
-                                                    <div class="pb-3 mx-3">{{ProfileAuthorUserForm.image}}</div>
-                                                </div>
-                                                <div class="row mt-3"> 
-                                                    <div class="col">
-                                                        <small> {{ProfileAuthorUserForm.image.help_text}}</small>
-                                                    </div> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                    <button type="submit" class="btn btn-primary my-1">Guardar cambios</button>
-                                </form>
-                            </div>
-                        </div>    
-                    </div>
+                    <a id="settings_profile" class="list-group-item list-group-item-action" data-toggle="list" href="#profile" role="tab">
+                        <div class="h6"> Perfil </div>
+                    </a>
                     {% endif %}
 
-                    <!-- Account -->
-                    <div class="tab-pane fade {% if request.user.is_superuser %}show active{% endif %}" id="account" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header"> <h5 class="card-title mb-0">Mi cuenta</h5> </div>
-                            <div class="card-body">
-                                <form id="account_frm">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="acc_username">{{AccountForm.username.label}}</label>
-                                        {{AccountForm.username}}
-                                    </div>
+                    <a id="settings_account" class="list-group-item list-group-item-action {% if request.user.is_superuser %}active{% endif %}" data-toggle="list" href="#account" role="tab">
+                        <div class="h6"> Ajustes de la cuenta </div>
+                    </a>
 
-                                    <div class="form-group">
-                                        <label for="acc_email">{{AccountForm.email.label}}</label>
-                                        {{AccountForm.email}}
-                                    </div>
-
-                                    <hr class="mx-1 my-4"> 
-
-                                    <div class="mx-2 py-2 mb-4">
-                                        <h6 class="text-muted"> <small> Te uniste el: {{ request.user.date_joined }} </small> </h6>
-                                        <h6 class="text-muted"> <small> Último inicio de sesión: {{ request.user.last_login }} </small> </h6>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary my-1"> Guardar cambios </button>    
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="mt-3 card">
-                            <div class="card-header"> <h5 class="card-title mb-0">Mis permisos</h5> </div>
-                            <div class="card-body">
-                                <div id="accordion">
-                                    
-                                    <div class="card">
-                                        <div class="card-header" id="show_permissions">
-                                            <h3 class="card-title mb-0">
-                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_perms" aria-expanded="true" aria-controls="collapseTwo">
-                                                    <i class="material-icons align-top">keyboard_arrow_down</i> Mostrar
-                                                </button>
-                                            </h3>
-                                        </div>
-                                        <div id="collapse_perms" class="collapse" aria-labelledby="show_permissions" data-parent="#accordion">
-                                            <div class="py-2 px-2">
-
-                                                {% for perm in permissions %}
-                                                <div class="input-group py-1">
-                                                    <input placeholder="{{perm}}" class="form-control" type="text" readonly disabled>
-                                                </div>
-                                                {% endfor %} 
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="tab-pane fade" id="password" role="tabpanel">
-                        <div class="card">
-                            <div class="card-header"> <h5 class="card-title mb-0">Editar o recuperar contraseña</h5> </div>
-                            <div class="card-body">        
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4 class="font-weight-bold my-2 mb-4">dddssd</h4>
-                                        <div class="container row d-flex justify-content-between">
-                                            <div class="float-right" data-toggle="tooltip" data-html="true" data-placement='bottom' title="Cambia tu contraseña">
-                                                <a href="" target="_blank" class="btn btn-sm btn-primary my-3 py-2">
-                                                    <i class="material-icons align-top mr-1">edit</i>Cambiar contraseña
-                                                </a> 
-                                            </div>
-                                            <div class="float-right" data-toggle="tooltip" data-html="true" data-placement='bottom' title="Recupera tu contraseña si la olvidaste">
-                                                <a href="" target="_blank" class="btn btn-sm btn-primary my-3 py-2">
-                                                    <i class="material-icons align-top mr-1">refresh</i> Restablecer contraseña
-                                                </a> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                           
-                            </div>
-                        </div>
-                    </div>
+                    <a id="settings_password" class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
+                        <div class="h6"> Contraseña </div>
+                    </a>
 
                 </div>
+
+
+
+
             </div>
-        </div>    
+        </div>
+
+        <div class="col-md-7 col-xl-8">
+            <div class="tab-content mt-3 mt-lg-0">
+                <!-- Profile -->
+                {% if not request.user.is_superuser %}
+                <div class="tab-pane fade" id="profile" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="card-title my-auto">DSSDDS</h5>
+                            <a href="{% url 'author_detail' author.slug %}" target="_blank" class="btn bnt-sm btn-primary"> 
+                                    Ver perfil
+                                </a>
+                        </div>
+                        <div class="card-body">
+                            <form id="profile_frm" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="ml-1" for="profile_firstName">{{ProfileUserForm.first_name.label}}</label> {{ProfileUserForm.first_name}}
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="ml-1" for="profile_lastName">{{ProfileUserForm.last_name.label}}</label> {{ProfileUserForm.last_name}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="ml-1" for="profile_title">{{ProfileAuthorUserForm.title.label}}</label> {{ProfileAuthorUserForm.title}}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="ml-1" for="profile_bio">{{ProfileAuthorUserForm.bio.label}}</label> {{ProfileAuthorUserForm.bio}}
+                                        </div>
+
+
+                                        <div data-toggle="tooltip" data-html="true" data-placement='right' title="nok">
+                                            <div class="bd-callout bd-callout-secondary">
+                                                <div class="form-group pt-1">
+                                                    <label class="ml-1" for="profile_mail"> {{ProfileAuthorUserForm.email.label}} <a href="#" type="button" data-toggle="modal" data-target="#generalModal" style="color:#5A5A5A"> <i id="showEpublic" class="fas fa-info-circle fa-lg mr-1"> </i> </a>  </label>
+                                                    <!-- if author.email == request.user.email -->
+                                                    <div class="input-group">
+                                                        {{ProfileAuthorUserForm.email}}
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="form-group pt-2">
+                                                    <label class="ml-1">Redes sociales</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-facebook-square fa-lg"></i></span></div>
+                                                        {{ProfileAuthorUserForm.facebook_URL}}
+                                                    </div>
+
+                                                    <div class="input-group py-2">
+                                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-twitter-square fa-lg"></i></span></div>
+                                                        {{ProfileAuthorUserForm.twitter_URL}}
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-linkedin fa-lg"></i></span></div>
+                                                        {{ProfileAuthorUserForm.linkedin_URL}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <div class="author-d-profile">
+                                                <img src="{{author.image.url}}" class="rounded-circle img-responsive my-3" width="128" height="128">
+                                                <p>Foto actual:<br><b id="profile_author_img">{{author.image_filename}}</b></p>
+                                                <div class="pb-3 mx-3">{{ProfileAuthorUserForm.image}}</div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <small> {{ProfileAuthorUserForm.image.help_text}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary my-1">Guardar cambios</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Account -->
+                <div class="tab-pane fade {% if request.user.is_superuser %}show active{% endif %}" id="account" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Mi cuenta</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="account_frm">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="acc_username">{{AccountForm.username.label}}</label> {{AccountForm.username}}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="acc_email">{{AccountForm.email.label}}</label> {{AccountForm.email}}
+                                </div>
+
+                                <hr class="mx-1 my-4">
+
+                                <div class="mx-2 py-2 mb-4">
+                                    <h6 class="text-muted"> <small> Te uniste el: {{ request.user.date_joined }} </small> </h6>
+                                    <h6 class="text-muted"> <small> Último inicio de sesión: {{ request.user.last_login }} </small> </h6>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary my-1"> Guardar cambios </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Mis permisos</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="accordion">
+
+                                <div class="card">
+                                    <div class="card-header" id="show_permissions">
+                                        <h3 class="card-title mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_perms" aria-expanded="true" aria-controls="collapseTwo">
+                                                    <i class="material-icons align-top">keyboard_arrow_down</i> Mostrar
+                                                </button>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_perms" class="collapse" aria-labelledby="show_permissions" data-parent="#accordion">
+                                        <div class="py-2 px-2">
+
+                                            {% for perm in permissions %}
+                                            <div class="input-group py-1">
+                                                <input placeholder="{{perm}}" class="form-control" type="text" readonly disabled>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="tab-pane fade" id="password" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Editar o recuperar contraseña</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="font-weight-bold my-2 mb-4">Opciones de contraseña</h4>
+                                    <div class="container row d-flex justify-content-between">
+                                        <div class="float-right" data-toggle="tooltip" data-html="true" data-placement='bottom' title="Cambia tu contraseña">
+                                            <a href="" target="_blank" class="btn btn-sm btn-primary my-3 py-2">
+                                                <i class="material-icons align-top mr-1">edit</i>Cambiar contraseña
+                                            </a>
+                                        </div>
+                                        <div class="float-right" data-toggle="tooltip" data-html="true" data-placement='bottom' title="Recupera tu contraseña si la olvidaste">
+                                            <a href="" target="_blank" class="btn btn-sm btn-primary my-3 py-2">
+                                                <i class="material-icons align-top mr-1">refresh</i> Restablecer contraseña
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
+</div>
 
 
 {% endblock %}

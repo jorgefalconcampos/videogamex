@@ -1,33 +1,28 @@
-{% extends 'vgmxApp/staff/base.html' %}
-{% load static %}
-
-
-{% block profile %}
+{% extends 'vgmxApp/staff/base.html' %} {% load static %} {% block profile %}
 
 
 <div class="card my-5 col-lg-12">
     <div class="card-header grad-6 my-3">
         <div class="container">
             <a href="{% url 'ajustes' %}" class="close"> <i class="material-icons align-middle">settings_applications</i> </a>
-            <div class="row my-3 mx-1 text-center text-lg-left">               
-                <div class="col-lg-3 py-2 author-d-profile text-center" >
+            <div class="row my-3 mx-1 text-center text-lg-left">
+                <div class="col-lg-3 py-2 author-d-profile text-center">
                     <div class="row text-center">
                         <div class="col py-2">
                             <img class="py-1 rounded-circle" src="{{author.image.url}}" width="165" height="165">
                         </div>
                     </div>
                     {% if not request.user.is_superuser %}
-                    <a href="{% url 'author_detail' author.slug %}" target="_blank" class="btn btn-sm btn-primary my-2"> Ver perfil </a> 
-                    {% endif %}
+                    <a href="{% url 'author_detail' author.slug %}" target="_blank" class="btn btn-sm btn-primary my-2"> Ver perfil </a> {% endif %}
                 </div>
-            
+
                 <div class="col-lg-9 mt-xs-1 mt-sm-4 mt-md-2 mt-lg-3">
                     <div class="ml-0 ml-lg-3">
                         <h3 class="author-d-name text-uppercase">{{request.user.get_full_name}}</h3>
                         <h4>{{request.user }}</h4>
                         <h5>{{request.user.email}}</h5>
 
-                        <div class="container"> 
+                        <div class="container">
                             <div class="row d-inline-flex pt-2 pb-1">
                                 <ul class="list-inline mb-0 pb-0">
                                     {% if author.email%}
@@ -36,25 +31,19 @@
                                             <a href="mailto:{{author.email}}" target="_blank"> <i class="fas fa-envelope fa-2x"></i> </a>
                                         </div>
                                     </li>
-                                    {% endif %}
-                                    
-                                    {% if author.facebook_URL%}
+                                    {% endif %} {% if author.facebook_URL%}
                                     <li class="list-inline-item">
                                         <div data-toggle="tooltip" data-html="true" data-placement='bottom' title="{{author.facebook_URL}}">
                                             <a href="{{author.facebook_URL}}" target="_blank" class="mr-2"> <i class="fab fa-facebook-square fa-2x"></i> </a>
                                         </div>
                                     </li>
-                                    {% endif %}
-                                    
-                                    {% if author.twitter_URL%}
+                                    {% endif %} {% if author.twitter_URL%}
                                     <li class="list-inline-item">
                                         <div data-toggle="tooltip" data-html="true" data-placement='bottom' title="{{author.twitter_URL}}">
                                             <a href="{{author.twitter_URL}}" target="_blank" class="mr-2"> <i class="fab fa-twitter-square fa-2x"></i> </a>
                                         </div>
                                     </li>
-                                    {% endif %}
-                                    
-                                    {% if author.linkedin_URL%}
+                                    {% endif %} {% if author.linkedin_URL%}
                                     <li class="list-inline-item">
                                         <div data-toggle="tooltip" data-html="true" data-placement='bottom' title="{{author.linkedin_URL}}">
                                             <a href="{{author.linkedin_URL}}" target="_blank"> <i class="fab fa-linkedin fa-2x"></i> </a>
@@ -91,21 +80,15 @@
                     <i class="material-icons md-30 mr-2">done</i>
                     <h5 class="font-weight-bold mr-1">fewefwefwefw: </h5>
                     <h5>{{v}}</h5>
-                    {% endif %}
-
-                    {% if k == 'draft' %}
+                    {% endif %} {% if k == 'draft' %}
                     <i class="material-icons md-30 mr-2">access_time</i>
                     <h5 class="font-weight-bold mr-1"> sassasa </h5>
                     <h5>{{v}}</h5>
-                    {% endif %}
-                                     
-                    {% if k == 'archived' %}
+                    {% endif %} {% if k == 'archived' %}
                     <i class="material-icons md-30 mr-2">archive</i>
                     <h5 class="font-weight-bold mr-1">Juegos archivados: </h5>
                     <h5>{{v}}</h5>
-                    {% endif %}
-
-                    {% if k == 'rejected' %}
+                    {% endif %} {% if k == 'rejected' %}
                     <i class="material-icons md-30 mr-2">clear</i>
                     <h5 class="font-weight-bold mr-1">Juegos rechazados: </h5>
                     <h5>{{v}}</h5>
@@ -118,21 +101,21 @@
                 <div class="py-3 d-flex justify-content-center align-items-center">
                     <h3 class="pt-5 pt-lg-0 text-center text-uppercase">Juegos vendidos</h3>
                 </div>
-            
+
                 <div class="py-4 d-flex justify-content-center align-items-center">
                     <div data-toggle="tooltip" data-html="true" data-placement='top' title="Las reacciones solos se pueden agregar a los posts publicados">
                         <div class="d-flex">
                             <i class="material-icons md-30 mr-2">line_weight</i>
                             <h5 class="font-weight-bold mr-1">Juegos cosdds </h5>
                             <h5></h5>
-                        </div>           
+                        </div>
                     </div>
                 </div>
 
-             
+
             </div>
             {% endif %}
-        </div>       
+        </div>
     </div>
 
 </div>

@@ -10,6 +10,7 @@ class GameForm(f.ModelForm):
         model = Game
         title_attrs = {'class':'form-control form-control-lg', 'id':'post_title', 'type': 'text', 'name':'title', 'placeholder': 'Nombre del juego'}
         category_attrs = {'class':'selectpicker', 'id':'post_category', 'name':'category', 'data-style':'bs-select-form-control', 'data-title': 'Categoría', 'data-width':'100%' }
+        status_attrs = {'class':'selectpicker', 'id':'post_status', 'name':'status', 'data-style':'bs-select-form-control', 'data-title': 'Status', 'data-width':'100%' }
         fields = ('title', 'image', 'category')
         labels = {
             'title': 'Título del juego',
@@ -20,6 +21,7 @@ class GameForm(f.ModelForm):
         widgets = {
             'title': f.TextInput(attrs=title_attrs),
             'category': f.Select(attrs=category_attrs),
+            'status': f.Select(attrs=status_attrs),
         }
 
 
