@@ -11,6 +11,7 @@ urlpatterns = [
     path('efectivo', views.efectivo, name='efectivo'),
     path('metodosPago', views.metodos_de_pago, name='metodos_pago'),
     path('categorias', views.categorias, name='categorias'),
+    path('juego/<slug:slug>', views.detalle_juego, name='juego_detalle'),
     path('categorias/<slug:slug>', views.categorias_detalle, name='categorias_detalle'),
 
     path('productos', views.productos, name='productos'),

@@ -110,10 +110,17 @@ def categorias_detalle(request, slug):
     except EmptyPage:
         games_list = paginacion.page(paginacion.num_pages)
     context = {'category': categoria, 'games_list': games_list}
-
     return render (request, template, context)
 
 
+
+
+
+def detalle_juego(request, slug):
+    template = os.path.join(TFP_SITE, 'game_detail.html')
+
+
+    return render (request, template) 
 
 
 

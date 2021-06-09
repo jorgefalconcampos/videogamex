@@ -51,6 +51,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style="min-width:max-content;">
                         <div class="dropdown-header py-0"> <h5 class="py-2"> Hola {{ request.user.first_name|default:request.user }}! 👋 </h5> </div>  
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'juego_nuevo' %}"> <i class="material-icons align-top">add_box</i> Nuevo juego </a>
                         <a class="dropdown-item" href=""> <i class="material-icons align-top">person</i> Perfil </a>
                         <a class="dropdown-item" href=""> <i class="material-icons align-top">settings</i> Configuración </a>
                         <a class="dropdown-item" href="{{ HTTP_HOST }}/admin"> <i class="material-icons align-top">admin_panel_settings</i>Administración de Django</a>

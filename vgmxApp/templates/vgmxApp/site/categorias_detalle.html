@@ -19,21 +19,24 @@
         {% for juego in games_list %}
         <div class="col-md-4 my-4">
             <div class="card h-100 detail">
-                <div class="img-post img-zoom">    
-                </div>
-                
-                <div class="card-body">
-                    <h6 class="mt-1 mb-3"> {{ juego.title }} </h6>
-                    <hr>
-                    <div class="col py-2 text-center">
-                        <img class="py-1" src="{{juego.image.url}}" width="165" height="165">
+                <a href="{% url 'juego_detalle' juego.slug %}">
+                    <div class="img-post img-zoom">    
                     </div>
-                </div>                
-                <div class="card-footer">
-                    <p class="mt-1 mb-1 card-subtitle text-muted "> Fecha de publicación : {{ juego.published_date }} </p>
-                    <hr>
-                    <h6>Precio: <span class="font-weight-bold">$599 </span></h6>
-                </div>
+                    
+                    <div class="card-body">
+                        <h6 class="mt-1 mb-3"> {{ juego.title }} </h6>
+                        <hr>
+                        <div class="col py-2 text-center">
+                            <img class="py-1" src="{{juego.image.url}}" width="165" height="165">
+                        </div>
+                    </div>                
+                    <div class="card-footer">
+                        <p class="mt-1 mb-1 card-subtitle text-muted "> Fecha de publicación : {{ juego.published_date }} </p>
+                        <hr>
+                        <h6>Precio: <span class="font-weight-bold">$599 </span></h6>
+                    </div>
+                </a>
+
             </div> 
         </div>  
         {% endfor %}
